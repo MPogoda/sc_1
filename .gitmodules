@@ -1,0 +1,3 @@
+[submodule "fuzzylite"]
+	path = fuzzylite
+	url = https://code.google.com/p/fuzzylite/
