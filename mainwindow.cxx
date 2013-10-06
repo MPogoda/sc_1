@@ -18,6 +18,9 @@ MainWindow::MainWindow( QWidget *parent )
 
     connect( ui_->order_b, SIGNAL(clicked()), this, SLOT(Order()));
     connect( ui_->drink_b, SIGNAL(clicked()), this, SLOT(Drink()));
+
+    // TODO: remove this
+    ui_->time->setValue( 30 );
 }
 
 MainWindow::~MainWindow()
@@ -70,9 +73,15 @@ void MainWindow::Drink()
     ui_->beverage->setValue( ui_->beverage->value() - will_drink );
 
     if (0 == ui_->beverage->value()) {
-        ui_->order_b->setEnabled( true );
-        ui_->company_gb->setEnabled( true );
         ui_->beverage_gb->setEnabled( false );
+
+        if (30 > ui_->time->value()) {
+            ui_->time->setValue( 0 );
+            // Sorry bro
+        } else {
+            ui_->order_b->setEnabled( true );
+            ui_->company_gb->setEnabled( true );
+        }
     }
 }
 } // namespace virtualBartender
