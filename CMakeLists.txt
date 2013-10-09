@@ -14,9 +14,9 @@ add_definitions( ${QT_DEFINITIONS} )
 add_definitions( -std=c++11 )
 
 include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
-qt4_wrap_ui( FORMS_HEADERS mainwindow.ui )
+qt4_wrap_ui( FORMS_HEADERS mainwindow.ui parametersdialog.ui )
 
 file( GLOB virtualBartender_SRCS "*.cxx" )
 
 add_executable( virtualBartender ${virtualBartender_SRCS} ${FORMS_HEADERS} )
-target_link_libraries( virtualBartender ${QT_LIBRARIES} )
+target_link_libraries( virtualBartender ${QT_LIBRARIES} fl-static )

@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <random>
+#include "parametersdialog.h"
 
+#include <random>
 #include <iostream>
 
 namespace virtualBartender
@@ -9,22 +10,30 @@ namespace virtualBartender
 MainWindow::MainWindow( QWidget *parent )
   : QWidget{ parent }
   , ui_{ new Ui::MainWindow{} }
+  , parameters_{ new ParametersDialog{ this } }
 {
     if (ui_) {
         ui_->setupUi( this );
     }
 
+    if (QDialog::Accepted != parameters_->exec()) {
+        throw std::logic_error{ "WHARTASD" };
+    }
+
+    ui_->friends->setValue( parameters_->getGroupCount() );
+    ui_->drunk->setMaximum( parameters_->getDrunknessMaximum() );
+    ui_->time->setMaximum( 60 * parameters_->getHours());
+    ui_->time->setValue( ui_->time->maximum() );
+
     ui_->order_b->setEnabled( true );
 
     connect( ui_->order_b, SIGNAL(clicked()), this, SLOT(Order()));
     connect( ui_->drink_b, SIGNAL(clicked()), this, SLOT(Drink()));
-
-    // TODO: remove this
-    ui_->time->setValue( 30 );
 }
 
 MainWindow::~MainWindow()
 {
+    delete parameters_;
     delete ui_;
 }
 
@@ -34,11 +43,13 @@ void MainWindow::Order()
     constexpr minutes timeForDrink{ 30 };
 
     // TODO: CALCULATE
-    const uint32_t ml{ 300 };
-
+    const uint32_t ml = parameters_->calculateBeverage( ui_->time->value()
+                                                      , ui_->friends->value()
+                                                      , ui_->drunk->value());
     if ( 50 > ml ) {
         // well, shit
         // No more, bro
+        return;
     }
 
     timeForMl_ = duration_cast< seconds >( timeForDrink / static_cast< double >( ml ) );

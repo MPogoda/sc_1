@@ -10,6 +10,7 @@ class MainWindow;
 
 namespace virtualBartender
 {
+class ParametersDialog;
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -21,6 +22,7 @@ private:
     std::chrono::seconds timeForMl_;
 
     Ui::MainWindow *const ui_;
+    ParametersDialog *const parameters_;
 private slots:
     void Drink();
     void Order();
