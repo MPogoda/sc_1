@@ -82,7 +82,7 @@
       <item>
        <widget class="QSlider" name="drunk">
         <property name="maximum">
-         <number>3</number>
+         <number>2</number>
         </property>
         <property name="singleStep">
          <number>1</number>

@@ -24,7 +24,7 @@ public:
     uint32_t calculateBeverage( uint32_t minutes, uint32_t group, uint32_t drunk ) const;
 private:
     struct ParametersImpl;
-    std::unique_ptr< ParametersImpl > impl_;
+    mutable std::unique_ptr< ParametersImpl > impl_;
     Ui::ParametersDialog* ui_;
 }; // class ParametersDialog
 } // namespace virtualBartender

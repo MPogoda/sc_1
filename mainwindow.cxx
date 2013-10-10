@@ -17,7 +17,7 @@ MainWindow::MainWindow( QWidget *parent )
     }
 
     if (QDialog::Accepted != parameters_->exec()) {
-        throw std::logic_error{ "WHARTASD" };
+        throw std::exception{ };
     }
 
     ui_->friends->setValue( parameters_->getGroupCount() );
@@ -33,8 +33,11 @@ MainWindow::MainWindow( QWidget *parent )
 
 MainWindow::~MainWindow()
 {
+  std::cout << "1\n";
     delete parameters_;
+  std::cout << "2\n";
     delete ui_;
+  std::cout << "3\n";
 }
 
 void MainWindow::Order()
@@ -72,7 +75,10 @@ void MainWindow::Drink()
     const int32_t will_drink{ qMin( int_dist( generator)
                                   , ui_->beverage->value() ) };
     cout << will_drink << "\n";
+
+
     // TODO: Calculate drunkness
+    ui_->drunk->setValue( ui_->drunk->value() + will_drink );
 
     // Re-calculating time
     using namespace std::chrono;
