@@ -99,20 +99,20 @@ struct ParametersDialog::ParametersImpl
                   inputDrunkness->addTerm( tempTerm.release() );
               break;
             case 1:
-              tempTerm.reset( new fl::Triangle{ "SOBER", 0.000, 500.000, 1000.000 } );
+              tempTerm.reset( new fl::Trapezoid{ "SOBER", 0.0, 900.0, 1700.0, 2000.0 } );
                   inputDrunkness->addTerm( tempTerm.release() );
-              tempTerm.reset( new fl::Triangle{ "TIPSY", 500.000, 1750.000, 3000.000 } );
+              tempTerm.reset( new fl::Gaussian{ "TIPSY", 2400.0, 420.0 } );
                   inputDrunkness->addTerm( tempTerm.release() );
-              tempTerm.reset( new fl::Sigmoid{ "DRUNK", 3000.000, 0.002 } );
+              tempTerm.reset( new fl::Sigmoid{ "DRUNK", 2500.0, 0.001 } );
                   inputDrunkness->addTerm( tempTerm.release() );
               break;
             case 2:
             default:
-              tempTerm.reset( new fl::Triangle{ "SOBER", 0.000, 500.000, 1000.000 } );
+              tempTerm.reset( new fl::Trapezoid{ "SOBER", 0.0, 900.0, 1700.0, 2960.0 } );
                   inputDrunkness->addTerm( tempTerm.release() );
-              tempTerm.reset( new fl::Triangle{ "TIPSY", 500.000, 1750.000, 3000.000 } );
+              tempTerm.reset( new fl::Gaussian{ "TIPSY", 3120.0, 1020.0 } );
                   inputDrunkness->addTerm( tempTerm.release() );
-              tempTerm.reset( new fl::Sigmoid{ "DRUNK", 3000.000, 0.002 } );
+              tempTerm.reset( new fl::Sigmoid{ "DRUNK", 5020.0, 0.009 } );
                   inputDrunkness->addTerm( tempTerm.release() );
               break;
         }
@@ -127,8 +127,8 @@ struct ParametersDialog::ParametersImpl
         outputBeverage->setLockOutputRange(false);
         outputBeverage->setDefaultValue(0.000);
         outputBeverage->setLockValidOutput(false);
-        outputBeverage->setDefuzzifier(new fl::Centroid(200));
-        outputBeverage->output()->setAccumulation(new fl::AlgebraicSum);
+        outputBeverage->setDefuzzifier(new fl::Centroid( 9000 ));
+        outputBeverage->output()->setAccumulation(new fl::Maximum);
 
         tempTerm.reset( new fl::Sigmoid{ "SMALL", 330.000, -0.014 } );
             outputBeverage->addTerm( tempTerm.release() );
